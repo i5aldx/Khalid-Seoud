@@ -4,20 +4,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>The Giver — Board Game</title>
-
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
-
 <style>
 :root {
-  --bg:#ffffff; --surface:#f5f0e8; --border:rgba(100,70,20,0.18);
+  --surface:#f5f0e8; --border:rgba(100,70,20,0.18);
   --gold:#b07d2a; --gold2:#8a5c10; --text:#2a1f0a; --muted:#7a6a50;
-  --green:#1a9e5c; --red:#c0392b; --blue:#2563a8;
+  --green:#1a9e5c; --red:#c0392b;
   --snake-bg:rgba(192,57,43,0.09); --ladder-bg:rgba(26,158,92,0.09);
   --r:14px; --r-sm:10px;
 }
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
 body{min-height:100dvh;background:#fff;font-family:'Lora',Georgia,serif;color:var(--text);overflow-x:hidden;}
-
 header{
   position:sticky;top:0;z-index:100;
   background:rgba(255,255,255,0.96);backdrop-filter:blur(12px);
@@ -25,191 +22,84 @@ header{
   text-align:center;box-shadow:0 2px 12px rgba(0,0,0,0.07);
 }
 .ram-logo{
-  position:absolute;
-  left:14px;
-  top:10px;
-  width:44px;
-  height:44px;
-  border-radius:50%;
-  object-fit:cover;
-  border:2px solid var(--gold);
-  background:white;
+  position:absolute;left:14px;top:10px;width:52px;height:52px;
+  border-radius:50%;object-fit:cover;border:3px solid var(--gold);
+  background:white;padding:3px;
 }
 header h1{font-family:'Cinzel',serif;font-size:1.25rem;color:var(--gold2);letter-spacing:1.5px;}
 header p{color:var(--muted);font-size:0.72rem;margin-top:2px;font-style:italic;}
-
-#joinScreen{position:relative;z-index:1;max-width:380px;margin:40px auto;padding:0 16px;}
-.join-card{
-  background:var(--surface);border:1.5px solid var(--border);border-radius:20px;
-  padding:28px 24px 24px;box-shadow:0 8px 30px rgba(0,0,0,0.1);
-}
+#joinScreen{max-width:380px;margin:40px auto;padding:0 16px;}
+.join-card{background:var(--surface);border:1.5px solid var(--border);border-radius:20px;padding:28px 24px 24px;box-shadow:0 8px 30px rgba(0,0,0,0.1);}
 .join-card h2{font-family:'Cinzel',serif;font-size:1rem;color:var(--gold2);text-align:center;margin-bottom:6px;letter-spacing:1px;}
 .join-card p.sub{font-size:0.72rem;color:var(--muted);font-style:italic;text-align:center;margin-bottom:18px;}
-.field{
-  width:100%;padding:13px 16px;border-radius:var(--r-sm);border:1.5px solid var(--border);
-  background:#fff;color:var(--text);font-size:0.95rem;font-family:'Lora',serif;
-  margin-bottom:11px;outline:none;text-align:center;
-}
+.field{width:100%;padding:13px 16px;border-radius:var(--r-sm);border:1.5px solid var(--border);background:#fff;color:var(--text);font-size:0.95rem;font-family:'Lora',serif;margin-bottom:11px;outline:none;text-align:center;}
 .field:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(176,125,42,0.12);}
-.join-btn{
-  width:100%;padding:15px;border-radius:var(--r-sm);border:none;
-  background:linear-gradient(135deg,var(--gold),var(--gold2));color:#fff;
-  font-size:0.95rem;font-weight:700;font-family:'Cinzel',serif;letter-spacing:1px;
-  cursor:pointer;box-shadow:0 4px 18px rgba(176,125,42,0.25);
-}
+.join-btn{width:100%;padding:15px;border-radius:var(--r-sm);border:none;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#fff;font-size:0.95rem;font-weight:700;font-family:'Cinzel',serif;letter-spacing:1px;cursor:pointer;box-shadow:0 4px 18px rgba(176,125,42,0.25);}
 .err{color:var(--red);font-size:0.8rem;text-align:center;margin-bottom:8px;min-height:18px;}
 .join-note{color:var(--muted);font-size:0.72rem;text-align:center;margin-top:10px;font-style:italic;}
-
-#warnModal{
-  display:none;position:fixed;inset:0;z-index:300;
-  background:rgba(0,0,0,0.55);align-items:center;justify-content:center;padding:20px;
-}
+#warnModal{display:none;position:fixed;inset:0;z-index:300;background:rgba(0,0,0,0.55);align-items:center;justify-content:center;padding:20px;}
 #warnModal.show{display:flex;}
-.warn-card{
-  background:#fff;border-radius:22px;padding:30px 24px 24px;
-  max-width:310px;width:100%;text-align:center;
-  border:3px solid #d4750a;
-  box-shadow:0 10px 40px rgba(212,117,10,0.35);
-}
+.warn-card{background:#fff;border-radius:22px;padding:30px 24px 24px;max-width:310px;width:100%;text-align:center;border:3px solid #d4750a;box-shadow:0 10px 40px rgba(212,117,10,0.35);}
 .warn-card h3{font-family:'Cinzel',serif;font-size:1rem;color:#d4750a;margin-bottom:12px;}
 .warn-card p{font-size:1rem;color:var(--text);line-height:1.8;margin-bottom:20px;}
-.warn-continue{
-  padding:13px 28px;border-radius:var(--r-sm);border:none;
-  background:linear-gradient(135deg,#d4750a,#8a4a00);color:#fff;
-  font-size:1.4rem;font-weight:700;
-  cursor:pointer;width:100%;
-}
-
-#bannerReveal{
-  display:none;position:fixed;inset:0;z-index:350;
-  align-items:center;justify-content:center;flex-direction:column;gap:14px;
-}
+.warn-continue{padding:13px 28px;border-radius:var(--r-sm);border:none;background:linear-gradient(135deg,#d4750a,#8a4a00);color:#fff;font-size:1.4rem;font-weight:700;cursor:pointer;width:100%;}
+#bannerReveal{display:none;position:fixed;inset:0;z-index:350;align-items:center;justify-content:center;flex-direction:column;gap:14px;}
 #bannerReveal.show{display:flex;}
 #revealLabel{font-family:'Cinzel',serif;font-size:1.7rem;letter-spacing:4px;font-weight:700;text-align:center;}
 #revealSub{font-family:'Lora',serif;font-size:0.85rem;font-style:italic;opacity:0.7;text-align:center;}
 #revealName{font-family:'Cinzel',serif;font-size:1rem;letter-spacing:2px;opacity:0.9;}
-#revealCountdown{
-  width:54px;height:54px;border-radius:50%;display:flex;align-items:center;
-  justify-content:center;font-family:'Cinzel',serif;font-size:1.4rem;font-weight:700;
-  border:3px solid rgba(255,255,255,0.3);margin-top:6px;
-}
-
-#welcomeModal{
-  display:none;position:fixed;inset:0;z-index:360;
-  background:rgba(0,0,0,0.65);align-items:center;justify-content:center;padding:20px;
-}
+#revealCountdown{width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Cinzel',serif;font-size:1.4rem;font-weight:700;border:3px solid rgba(255,255,255,0.3);margin-top:6px;}
+#welcomeModal{display:none;position:fixed;inset:0;z-index:360;background:rgba(0,0,0,0.65);align-items:center;justify-content:center;padding:20px;}
 #welcomeModal.show{display:flex;}
-.welcome-card{
-  border-radius:26px;padding:36px 28px 28px;
-  max-width:320px;width:100%;text-align:center;
-  box-shadow:0 16px 60px rgba(0,0,0,0.5);
-}
+.welcome-card{border-radius:26px;padding:36px 28px 28px;max-width:320px;width:100%;text-align:center;box-shadow:0 16px 60px rgba(0,0,0,0.5);}
 .wc-title{font-family:'Cinzel',serif;font-size:0.7rem;letter-spacing:3px;opacity:0.7;margin-bottom:6px;}
 .wc-name{font-family:'Cinzel',serif;font-size:1.4rem;font-weight:700;margin-bottom:4px;letter-spacing:1px;}
 .wc-banner{font-family:'Lora',serif;font-size:0.82rem;font-style:italic;opacity:0.8;margin-bottom:20px;}
-.wc-btn{
-  padding:14px 32px;border-radius:50px;border:2px solid rgba(255,255,255,0.4);
-  background:rgba(255,255,255,0.15);color:inherit;
-  font-family:'Cinzel',serif;font-size:0.88rem;font-weight:700;letter-spacing:1.5px;
-  cursor:pointer;width:100%;
-}
-
-#gameScreen{display:none;position:relative;z-index:1;padding-bottom:30px;}
-#winnerBanner{
-  display:none;margin:12px 12px 0;border-radius:50px;padding:16px;
-  text-align:center;font-family:'Cinzel',serif;font-size:1rem;
-}
-#gameBannerStrip{
-  height:46px;display:flex;align-items:center;justify-content:center;
-  font-family:'Cinzel',serif;font-size:0.85rem;letter-spacing:2px;font-weight:700;
-  margin:0 10px;border-radius:0 0 var(--r) var(--r);
-}
+.wc-btn{padding:14px 32px;border-radius:50px;border:2px solid rgba(255,255,255,0.4);background:rgba(255,255,255,0.15);color:inherit;font-family:'Cinzel',serif;font-size:0.88rem;font-weight:700;letter-spacing:1.5px;cursor:pointer;width:100%;}
+#gameScreen{display:none;padding-bottom:30px;}
+#winnerBanner{display:none;margin:12px 12px 0;border-radius:50px;padding:16px;text-align:center;font-family:'Cinzel',serif;font-size:1rem;}
+#gameBannerStrip{height:46px;display:flex;align-items:center;justify-content:center;font-family:'Cinzel',serif;font-size:0.85rem;letter-spacing:2px;font-weight:700;margin:0 10px;border-radius:0 0 var(--r) var(--r);}
 #playersBar{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;padding:10px 12px 0;}
-.pchip{
-  padding:6px 14px;border-radius:100px;font-size:0.68rem;
-  font-family:'Cinzel',serif;font-weight:600;border:1.5px solid transparent;
-}
+.pchip{padding:6px 14px;border-radius:100px;font-size:0.68rem;font-family:'Cinzel',serif;font-weight:600;border:1.5px solid transparent;}
 .pchip.myturn{transform:scale(1.07);}
 #legend{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;padding:8px 12px 0;}
 .leg{padding:4px 10px;border-radius:100px;font-size:0.62rem;font-weight:600;white-space:nowrap;}
-#boardWrap{
-  margin:10px 10px 0;background:var(--surface);border:1.5px solid var(--border);
-  border-radius:var(--r);padding:10px;overflow-x:auto;
-}
+#boardWrap{margin:10px 10px 0;background:var(--surface);border:1.5px solid var(--border);border-radius:var(--r);padding:10px;overflow-x:auto;}
 #boardGrid{display:grid;grid-template-columns:repeat(6,1fr);gap:4px;min-width:320px;}
-.cell{
-  border-radius:8px;padding:6px 3px 5px;min-height:80px;
-  display:flex;flex-direction:column;align-items:center;text-align:center;
-  border:1.5px solid rgba(0,0,0,0.08);position:relative;
-}
+.cell{border-radius:8px;padding:6px 3px 5px;min-height:80px;display:flex;flex-direction:column;align-items:center;text-align:center;border:1.5px solid rgba(0,0,0,0.08);position:relative;}
 .cell-n{font-family:'Cinzel',serif;font-size:0.65rem;font-weight:700;margin-bottom:1px;}
 .cell-label{font-size:0.42rem;opacity:0.8;margin-bottom:1px;}
 .cell-text{font-size:0.5rem;line-height:1.35;flex:1;opacity:0.9;}
 .sl-badge{position:absolute;top:2px;right:3px;font-size:0.55rem;}
 .tokens{display:flex;flex-wrap:wrap;gap:2px;justify-content:center;margin-top:3px;}
-.token{
-  width:20px;height:20px;border-radius:50%;border:1.5px solid rgba(0,0,0,0.2);
-  display:flex;align-items:center;justify-content:center;
-  font-size:0.6rem;box-shadow:0 2px 6px rgba(0,0,0,0.25);
-}
-#qCard{
-  display:none;margin:10px 12px 0;background:var(--surface);border:1.5px solid var(--gold);
-  border-radius:var(--r);padding:20px 16px 16px;
-}
+.token{width:20px;height:20px;border-radius:50%;border:1.5px solid rgba(0,0,0,0.2);display:flex;align-items:center;justify-content:center;font-size:0.6rem;box-shadow:0 2px 6px rgba(0,0,0,0.25);}
+#qCard{display:none;margin:10px 12px 0;background:var(--surface);border:1.5px solid var(--gold);border-radius:var(--r);padding:20px 16px 16px;}
 #qType{font-family:'Cinzel',serif;font-size:0.85rem;color:var(--gold2);text-align:center;margin-bottom:10px;}
 #qText{font-size:0.98rem;line-height:1.65;text-align:center;color:var(--text);margin-bottom:14px;}
 #attemptCounter{text-align:center;font-size:0.72rem;color:var(--muted);margin-bottom:8px;font-style:italic;}
-#answerArea{
-  width:100%;padding:12px 14px;border-radius:var(--r-sm);border:1.5px solid var(--border);
-  background:#fff;color:var(--text);font-size:0.92rem;font-family:'Lora',serif;
-  resize:none;height:90px;outline:none;
-}
-#hintBox{
-  display:none;background:rgba(176,125,42,0.08);border:1px solid rgba(176,125,42,0.25);
-  border-radius:var(--r-sm);padding:11px 14px;margin-top:10px;
-  font-size:0.82rem;color:var(--gold2);font-style:italic;line-height:1.55;
-}
-#feedbackBox{
-  display:none;border-radius:var(--r-sm);padding:11px 14px;margin-top:10px;
-  font-size:0.85rem;line-height:1.5;text-align:center;
-}
+#answerArea{width:100%;padding:12px 14px;border-radius:var(--r-sm);border:1.5px solid var(--border);background:#fff;color:var(--text);font-size:0.92rem;font-family:'Lora',serif;resize:none;height:90px;outline:none;}
+#hintBox{display:none;background:rgba(176,125,42,0.08);border:1px solid rgba(176,125,42,0.25);border-radius:var(--r-sm);padding:11px 14px;margin-top:10px;font-size:0.82rem;color:var(--gold2);font-style:italic;line-height:1.55;}
+#feedbackBox{display:none;border-radius:var(--r-sm);padding:11px 14px;margin-top:10px;font-size:0.85rem;line-height:1.5;text-align:center;}
 .q-btns{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px;}
-.q-btn{
-  padding:13px 10px;border-radius:var(--r-sm);border:none;font-weight:700;
-  cursor:pointer;font-size:0.85rem;font-family:'Lora',serif;
-}
+.q-btn{padding:13px 10px;border-radius:var(--r-sm);border:none;font-weight:700;cursor:pointer;font-size:0.85rem;font-family:'Lora',serif;}
 .btn-submit{background:linear-gradient(135deg,var(--gold),var(--gold2));color:#fff;grid-column:1/-1;}
 .btn-skip{background:rgba(0,0,0,0.06);color:var(--muted);border:1px solid rgba(0,0,0,0.1);}
-#controls{
-  margin:10px 12px 0;background:var(--surface);border:1.5px solid var(--border);
-  border-radius:var(--r);padding:18px 16px;text-align:center;
-}
+#controls{margin:10px 12px 0;background:var(--surface);border:1.5px solid var(--border);border-radius:var(--r);padding:18px 16px;text-align:center;}
 #turnInfo{font-family:'Cinzel',serif;font-size:0.78rem;color:var(--gold2);margin-bottom:14px;}
-.die{
-  width:80px;height:80px;margin:0 auto 10px;
-  background:linear-gradient(145deg,#1f7a50,#0e4a28);
-  border:2px solid rgba(34,197,116,0.5);border-radius:16px;
-  display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);
-  padding:10px;gap:4px;cursor:pointer;
-}
+.die{width:80px;height:80px;margin:0 auto 10px;background:linear-gradient(145deg,#1f7a50,#0e4a28);border:2px solid rgba(34,197,116,0.5);border-radius:16px;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);padding:10px;gap:4px;cursor:pointer;}
 .die.off{opacity:0.3;cursor:not-allowed;}
 .ddot{border-radius:50%;}
 .ddot.on{background:white;box-shadow:0 1px 4px rgba(0,0,0,0.4);}
 #rollResult{color:var(--gold2);font-size:0.92rem;min-height:22px;font-style:italic;}
-#log{
-  margin:10px 12px 0;background:var(--surface);border:1.5px solid var(--border);
-  border-radius:var(--r);padding:11px 14px;font-size:0.7rem;color:var(--muted);
-  max-height:95px;overflow-y:auto;
-}
+#log{margin:10px 12px 0;background:var(--surface);border:1.5px solid var(--border);border-radius:var(--r);padding:11px 14px;font-size:0.7rem;color:var(--muted);max-height:95px;overflow-y:auto;}
 .log-e{padding:3px 0;border-bottom:1px solid rgba(0,0,0,0.04);}
 .credit{text-align:center;font-size:0.68rem;color:var(--muted);margin-top:16px;padding:0 16px 8px;font-style:italic;}
 </style>
 </head>
-
 <body>
 
 <header>
-  <img src="ram.png" class="ram-logo" alt="CSU Ram">
+  <img src="./ram.png" class="ram-logo" alt="CSU Ram" onerror="this.style.display='none'">
   <h1>The Giver</h1>
   <p>Multiplayer Board Game</p>
 </header>
@@ -256,14 +146,11 @@ header p{color:var(--muted);font-size:0.72rem;margin-top:2px;font-style:italic;}
   <div id="winnerBanner"></div>
   <div id="gameBannerStrip"></div>
   <div id="playersBar"></div>
-
   <div id="legend">
     <span class="leg" style="background:var(--ladder-bg);color:var(--green);border:1px solid rgba(26,158,92,0.3)">Ladder = Move Up</span>
     <span class="leg" style="background:var(--snake-bg);color:var(--red);border:1px solid rgba(192,57,43,0.3)">Snake = Move Down</span>
   </div>
-
   <div id="boardWrap"><div id="boardGrid"></div></div>
-
   <div id="qCard">
     <div id="qType"></div>
     <p id="qText"></p>
@@ -276,7 +163,6 @@ header p{color:var(--muted);font-size:0.72rem;margin-top:2px;font-style:italic;}
       <button class="q-btn btn-skip" onclick="skipQ()">Skip →</button>
     </div>
   </div>
-
   <div id="controls">
     <div id="turnInfo">Loading...</div>
     <div class="die" id="die" onclick="rollDice()">
@@ -286,7 +172,6 @@ header p{color:var(--muted);font-size:0.72rem;margin-top:2px;font-style:italic;}
     </div>
     <div id="rollResult"></div>
   </div>
-
   <div id="log"><div style="text-align:center;font-style:italic">Game log...</div></div>
   <p class="credit">Designed by Khalid Ahmed Al Seoud</p>
 </div>
@@ -304,8 +189,8 @@ const app = initializeApp({
   messagingSenderId:"634798461436",
   appId:"1:634798461436:web:dbb12ef70997ebdbf9e279"
 });
-const db = getDatabase(app);
 
+const db = getDatabase(app);
 const COLORS = ["#c0392b","#2563a8","#d4750a","#7c3aed"];
 const FACES = {1:[5],2:[2,8],3:[1,5,9],4:[1,3,7,9],5:[1,3,5,7,9],6:[1,3,4,6,7,9]};
 const SNAKES = {9:3,15:6,17:11};
@@ -322,7 +207,7 @@ const BANNERS = [
   {id:7,bg:"linear-gradient(135deg,#2a1a0a,#1a0a00)",color:"#f4a85a",label:"THE DUSK"}
 ];
 
-const EMOJI_POOL = ["🦁","🐯","🦊","🐺","🦅","🐉","🦋","🌊","⚡","🌙","🔥","🌿","🏔️","⭐","🎯","🌸"];
+const EMOJI_POOL = ["👁️","🍎","🛷","👶","💊","📚","🏠"];
 
 let myName="", roomId="", myId="", rolling=false;
 let myBanner=null, myEmoji="❓";
@@ -416,16 +301,13 @@ function showBannerReveal(banner, name, cb){
   const overlay = document.getElementById('bannerReveal');
   overlay.style.background = banner.bg;
 
-  const lbl = document.getElementById('revealLabel');
-  lbl.style.color = banner.color;
-  lbl.textContent = banner.label;
+  document.getElementById('revealLabel').style.color = banner.color;
+  document.getElementById('revealLabel').textContent = banner.label;
 
-  const nm = document.getElementById('revealName');
-  nm.style.color = banner.color + 'cc';
-  nm.textContent = name;
+  document.getElementById('revealName').style.color = banner.color + 'cc';
+  document.getElementById('revealName').textContent = name;
 
-  const sub = document.getElementById('revealSub');
-  sub.style.color = banner.color + '99';
+  document.getElementById('revealSub').style.color = banner.color + '99';
 
   const cd = document.getElementById('revealCountdown');
   cd.style.color = banner.color;
@@ -497,10 +379,7 @@ function startGame(){
 
     const ami = pl[ct]?.name === myName;
 
-    document.getElementById("turnInfo").textContent = ami
-      ? "Your turn! Roll the dice!"
-      : `Waiting for ${pl[ct]?.name || "..."}`;
-
+    document.getElementById("turnInfo").textContent = ami ? "Your turn! Roll the dice!" : `Waiting for ${pl[ct]?.name || "..."}`;
     document.getElementById("die").className = "die" + (ami ? "" : " off");
 
     Object.values(pl).forEach(p=>{
@@ -569,6 +448,7 @@ const QA={
 function buildBoard(){
   const g=document.getElementById("boardGrid");
   g.innerHTML="";
+
   SQ.forEach(sq=>{
     const t=CS[sq.type]||CS.vocab;
     const d=document.createElement("div");
@@ -584,6 +464,7 @@ function buildBoard(){
     if(SNAKES[sq.n]) h+=`<div class="sl-badge">↓${SNAKES[sq.n]}</div>`;
     if(LADDERS[sq.n]) h+=`<div class="sl-badge">↑${LADDERS[sq.n]}</div>`;
     h+=`<div class="tokens" id="tok-${sq.n}"></div>`;
+
     d.innerHTML=h;
     g.appendChild(d);
   });
@@ -600,6 +481,7 @@ function renderTokens(pl){
 function renderPlayers(pl,ct){
   const bar=document.getElementById("playersBar");
   bar.innerHTML="";
+
   Object.entries(pl).forEach(([id,p])=>{
     const d=document.createElement("div");
     d.className="pchip"+(id===ct?" myturn":"");
@@ -694,6 +576,7 @@ function applyWinnerBanner(name, emoji, bg, color){
 
 async function finishQuestion(passed){
   document.getElementById("qCard").style.display="none";
+
   let finalPos=pendingPos;
 
   if(pendingSqType==="snake"){
