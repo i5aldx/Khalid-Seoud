@@ -7,429 +7,255 @@
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #0d1117;
-  --surface: #161b27;
-  --surface2: #1e2636;
-  --border: rgba(180,150,80,0.18);
-  --gold: #c9a84c;
-  --gold2: #e8c97a;
-  --gold-dim: rgba(201,168,76,0.12);
-  --text: #e2d5bb;
-  --muted: #6b7a8d;
-  --green: #22c574;
-  --red: #e05252;
-  --blue: #5b9cf6;
-  --snake-bg: rgba(224,82,82,0.12);
-  --ladder-bg: rgba(34,197,116,0.12);
-  --r: 14px;
-  --r-sm: 10px;
+  --bg:#ffffff; --surface:#f5f0e8; --border:rgba(100,70,20,0.18);
+  --gold:#b07d2a; --gold2:#8a5c10; --text:#2a1f0a; --muted:#7a6a50;
+  --green:#1a9e5c; --red:#c0392b; --blue:#2563a8;
+  --snake-bg:rgba(192,57,43,0.09); --ladder-bg:rgba(26,158,92,0.09);
+  --r:14px; --r-sm:10px;
 }
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+body{min-height:100dvh;background:#fff;font-family:'Lora',Georgia,serif;color:var(--text);overflow-x:hidden;}
 
-* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
-
-body {
-  min-height: 100dvh;
-  background: var(--bg);
-  font-family: 'Lora', Georgia, serif;
-  color: var(--text);
-  overflow-x: hidden;
+header{
+  position:sticky;top:0;z-index:100;
+  background:rgba(255,255,255,0.96);backdrop-filter:blur(12px);
+  border-bottom:2px solid var(--border);padding:14px 16px 12px;
+  text-align:center;box-shadow:0 2px 12px rgba(0,0,0,0.07);
 }
-
-/* ── Subtle grain texture ── */
-body::before {
-  content:'';
-  position:fixed; inset:0; pointer-events:none; z-index:0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
-  opacity: 0.6;
-}
-
-/* ── Header ── */
-header {
-  position: sticky; top: 0; z-index: 100;
-  background: rgba(13,17,23,0.92);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--border);
-  padding: 14px 16px 12px;
-  text-align: center;
-}
-header h1 {
-  font-family: 'Cinzel', serif;
-  font-size: 1.25rem;
-  color: var(--gold2);
-  letter-spacing: 1.5px;
-  text-shadow: 0 0 20px rgba(201,168,76,0.35);
-}
-header p { color: var(--muted); font-size: 0.72rem; margin-top:2px; font-style:italic; }
+header h1{font-family:'Cinzel',serif;font-size:1.25rem;color:var(--gold2);letter-spacing:1.5px;}
+header p{color:var(--muted);font-size:0.72rem;margin-top:2px;font-style:italic;}
 
 /* ── Join Screen ── */
-#joinScreen {
-  position: relative; z-index:1;
-  max-width: 380px;
-  margin: 40px auto;
-  padding: 0 16px;
+#joinScreen{position:relative;z-index:1;max-width:380px;margin:40px auto;padding:0 16px;}
+.join-card{
+  background:var(--surface);border:1.5px solid var(--border);border-radius:20px;
+  padding:28px 24px 24px;box-shadow:0 8px 30px rgba(0,0,0,0.1);
 }
-.join-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 20px;
-  padding: 28px 24px 24px;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(201,168,76,0.06) inset;
+.join-card h2{font-family:'Cinzel',serif;font-size:1rem;color:var(--gold2);text-align:center;margin-bottom:6px;letter-spacing:1px;}
+.join-card p.sub{font-size:0.72rem;color:var(--muted);font-style:italic;text-align:center;margin-bottom:18px;}
+.field{
+  width:100%;padding:13px 16px;border-radius:var(--r-sm);border:1.5px solid var(--border);
+  background:#fff;color:var(--text);font-size:0.95rem;font-family:'Lora',serif;
+  margin-bottom:11px;outline:none;text-align:center;
+  transition:border-color 0.2s,box-shadow 0.2s;-webkit-appearance:none;
 }
-.join-card h2 {
-  font-family:'Cinzel',serif;
-  font-size:1rem;
-  color: var(--gold);
-  text-align:center;
-  margin-bottom:22px;
-  letter-spacing:1px;
+.field:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(176,125,42,0.12);}
+.join-btn{
+  width:100%;padding:15px;border-radius:var(--r-sm);border:none;
+  background:linear-gradient(135deg,var(--gold),var(--gold2));color:#fff;
+  font-size:0.95rem;font-weight:700;font-family:'Cinzel',serif;letter-spacing:1px;
+  cursor:pointer;box-shadow:0 4px 18px rgba(176,125,42,0.25);
+  transition:transform 0.15s;-webkit-appearance:none;
 }
-.field {
-  width:100%;
-  padding: 13px 16px;
-  border-radius: var(--r-sm);
-  border: 1.5px solid var(--border);
-  background: var(--bg);
-  color: var(--text);
-  font-size: 0.95rem;
-  font-family: 'Lora', serif;
-  margin-bottom: 11px;
-  outline: none;
-  text-align:center;
-  transition: border-color 0.2s, box-shadow 0.2s;
-  -webkit-appearance: none;
+.join-btn:active{transform:scale(0.97);}
+.err{color:var(--red);font-size:0.8rem;text-align:center;margin-bottom:8px;min-height:18px;}
+.join-note{color:var(--muted);font-size:0.72rem;text-align:center;margin-top:10px;font-style:italic;}
+
+/* ── Warning Modal ── */
+#warnModal{
+  display:none;position:fixed;inset:0;z-index:300;
+  background:rgba(0,0,0,0.55);align-items:center;justify-content:center;padding:20px;
 }
-.field:focus {
-  border-color: var(--gold);
-  box-shadow: 0 0 0 3px rgba(201,168,76,0.1);
+#warnModal.show{display:flex;}
+.warn-card{
+  background:#fff;border-radius:22px;padding:30px 24px 24px;
+  max-width:310px;width:100%;text-align:center;
+  border:3px solid #d4750a;
+  box-shadow:0 10px 40px rgba(212,117,10,0.35);
+  animation:popIn 0.35s cubic-bezier(0.34,1.56,0.64,1);
 }
-.join-btn {
-  width:100%;
-  padding: 15px;
-  border-radius: var(--r-sm);
-  border: none;
-  background: linear-gradient(135deg, #c9a84c, #8a6018);
-  color: #0d1117;
-  font-size: 0.95rem;
-  font-weight: 700;
-  font-family: 'Cinzel', serif;
-  letter-spacing: 1px;
-  cursor: pointer;
-  box-shadow: 0 4px 18px rgba(201,168,76,0.28);
-  transition: transform 0.15s, box-shadow 0.15s;
-  -webkit-appearance: none;
+@keyframes popIn{from{transform:scale(0.7);opacity:0}to{transform:scale(1);opacity:1}}
+.warn-emoji-big{font-size:3rem;margin-bottom:12px;display:block;}
+.warn-card h3{font-family:'Cinzel',serif;font-size:1rem;color:#d4750a;margin-bottom:12px;letter-spacing:1px;}
+.warn-card p{font-size:0.88rem;color:var(--text);line-height:1.7;margin-bottom:20px;}
+.warn-continue{
+  padding:13px 28px;border-radius:var(--r-sm);border:none;
+  background:linear-gradient(135deg,#d4750a,#8a4a00);color:#fff;
+  font-family:'Cinzel',serif;font-size:0.88rem;font-weight:700;
+  cursor:pointer;-webkit-appearance:none;width:100%;margin-bottom:8px;
+  transition:transform 0.12s;
 }
-.join-btn:active { transform: scale(0.97); }
-.err { color: var(--red); font-size:0.8rem; text-align:center; margin-bottom:8px; min-height:18px; }
-.join-note { color:var(--muted); font-size:0.72rem; text-align:center; margin-top:10px; font-style:italic; }
+.warn-continue:active{transform:scale(0.97);}
+.warn-change{
+  padding:11px 28px;border-radius:var(--r-sm);border:1.5px solid rgba(0,0,0,0.12);
+  background:transparent;color:var(--muted);
+  font-family:'Lora',serif;font-size:0.82rem;
+  cursor:pointer;-webkit-appearance:none;width:100%;
+}
+
+/* ── Banner Reveal (after join) ── */
+#bannerReveal{
+  display:none;position:fixed;inset:0;z-index:350;
+  align-items:center;justify-content:center;flex-direction:column;gap:14px;
+}
+#bannerReveal.show{display:flex;animation:fadeIn 0.4s ease;}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+#revealIcon{font-size:5.5rem;animation:bounceIn 0.7s cubic-bezier(0.34,1.56,0.64,1);}
+@keyframes bounceIn{from{transform:scale(0) rotate(-15deg);opacity:0}to{transform:scale(1) rotate(0);opacity:1}}
+#revealLabel{font-family:'Cinzel',serif;font-size:1.7rem;letter-spacing:4px;font-weight:700;text-align:center;}
+#revealSub{font-family:'Lora',serif;font-size:0.85rem;font-style:italic;opacity:0.7;text-align:center;}
+#revealName{font-family:'Cinzel',serif;font-size:1rem;letter-spacing:2px;opacity:0.9;}
+#revealCountdown{
+  width:54px;height:54px;border-radius:50%;display:flex;align-items:center;
+  justify-content:center;font-family:'Cinzel',serif;font-size:1.4rem;font-weight:700;
+  border:3px solid rgba(255,255,255,0.3);margin-top:6px;
+}
+.reveal-particles{position:absolute;inset:0;pointer-events:none;overflow:hidden;}
+.rp{
+  position:absolute;font-size:1.4rem;opacity:0;
+  animation:floatRp 2.5s ease-out forwards;
+}
+@keyframes floatRp{
+  0%{opacity:1;transform:translateY(0) scale(1) rotate(0deg)}
+  100%{opacity:0;transform:translateY(-200px) scale(0.3) rotate(360deg)}
+}
+
+/* ── Welcome Emoji Modal ── */
+#welcomeModal{
+  display:none;position:fixed;inset:0;z-index:360;
+  background:rgba(0,0,0,0.65);align-items:center;justify-content:center;padding:20px;
+}
+#welcomeModal.show{display:flex;}
+.welcome-card{
+  border-radius:26px;padding:36px 28px 28px;
+  max-width:320px;width:100%;text-align:center;
+  box-shadow:0 16px 60px rgba(0,0,0,0.5);
+  animation:welcomePop 0.5s cubic-bezier(0.34,1.56,0.64,1);
+  position:relative;overflow:hidden;
+}
+@keyframes welcomePop{from{transform:scale(0.6) translateY(30px);opacity:0}to{transform:scale(1) translateY(0);opacity:1}}
+.wc-inner{position:relative;z-index:1;}
+.wc-emoji{
+  font-size:5rem;display:block;margin-bottom:14px;
+  animation:emojiSpin 0.8s cubic-bezier(0.34,1.56,0.64,1) 0.2s both;
+}
+@keyframes emojiSpin{from{transform:scale(0) rotate(-30deg);opacity:0}to{transform:scale(1) rotate(0);opacity:1}}
+.wc-title{font-family:'Cinzel',serif;font-size:0.7rem;letter-spacing:3px;opacity:0.7;margin-bottom:6px;}
+.wc-name{font-family:'Cinzel',serif;font-size:1.4rem;font-weight:700;margin-bottom:4px;letter-spacing:1px;}
+.wc-banner{font-family:'Lora',serif;font-size:0.82rem;font-style:italic;opacity:0.8;margin-bottom:20px;}
+.wc-btn{
+  padding:14px 32px;border-radius:50px;border:2px solid rgba(255,255,255,0.4);
+  background:rgba(255,255,255,0.15);color:inherit;
+  font-family:'Cinzel',serif;font-size:0.88rem;font-weight:700;letter-spacing:1.5px;
+  cursor:pointer;-webkit-appearance:none;width:100%;
+  backdrop-filter:blur(8px);transition:background 0.2s,transform 0.12s;
+}
+.wc-btn:active{transform:scale(0.97);}
+.wc-particle{position:absolute;pointer-events:none;font-size:1.1rem;opacity:0;animation:wcp 2s ease-out forwards;}
+@keyframes wcp{0%{opacity:1;transform:translate(0,0) scale(1)}100%{opacity:0;transform:translate(var(--tx),var(--ty)) scale(0.3)}}
 
 /* ── Game Screen ── */
-#gameScreen { display:none; position:relative; z-index:1; padding-bottom:30px; }
-
-/* Winner */
-#winnerBanner {
-  display:none;
-  margin: 12px 12px 0;
-  background: linear-gradient(135deg,#c9a84c,#7a4c08);
-  border-radius: var(--r);
-  padding: 16px;
-  text-align:center;
-  font-family:'Cinzel',serif;
-  font-size:1rem;
-  color:#0d1117;
-  box-shadow: 0 0 30px rgba(201,168,76,0.5);
-  animation: glow 2s infinite;
+#gameScreen{display:none;position:relative;z-index:1;padding-bottom:30px;}
+#winnerBanner{
+  display:none;margin:12px 12px 0;border-radius:50px;padding:16px;
+  text-align:center;font-family:'Cinzel',serif;font-size:1rem;
+  animation:pulse 2s infinite;
 }
-@keyframes glow { 0%,100%{box-shadow:0 0 30px rgba(201,168,76,0.5)} 50%{box-shadow:0 0 55px rgba(201,168,76,0.8)} }
-
-/* Players bar */
-#playersBar {
-  display:flex; gap:6px; flex-wrap:wrap;
-  justify-content:center;
-  padding: 10px 12px 0;
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.82}}
+#gameBannerStrip{
+  height:46px;display:flex;align-items:center;justify-content:center;
+  font-family:'Cinzel',serif;font-size:0.85rem;letter-spacing:2px;font-weight:700;
+  margin:0 10px;border-radius:0 0 var(--r) var(--r);
 }
-.pchip {
-  padding: 6px 14px;
-  border-radius: 100px;
-  font-size: 0.68rem;
-  font-family:'Cinzel',serif;
-  font-weight:600;
-  border: 1.5px solid transparent;
-  transition: all 0.3s;
-  white-space: nowrap;
+#playersBar{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;padding:10px 12px 0;}
+.pchip{
+  padding:6px 14px;border-radius:100px;font-size:0.68rem;
+  font-family:'Cinzel',serif;font-weight:600;border:1.5px solid transparent;
+  transition:all 0.3s;white-space:nowrap;
 }
-.pchip.myturn { transform:scale(1.07); }
-
-/* ── Board ── */
-#boardWrap {
-  margin: 10px 10px 0;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--r);
-  padding: 10px;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
+.pchip.myturn{transform:scale(1.07);}
+#boardWrap{
+  margin:10px 10px 0;background:var(--surface);border:1.5px solid var(--border);
+  border-radius:var(--r);padding:10px;overflow-x:auto;-webkit-overflow-scrolling:touch;
+  box-shadow:0 2px 12px rgba(0,0,0,0.07);
 }
-#boardGrid {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 4px;
-  min-width: 320px;
+#boardGrid{display:grid;grid-template-columns:repeat(6,1fr);gap:4px;min-width:320px;}
+.cell{
+  border-radius:8px;padding:6px 3px 5px;min-height:80px;
+  display:flex;flex-direction:column;align-items:center;text-align:center;
+  border:1.5px solid rgba(0,0,0,0.08);position:relative;
 }
-.cell {
-  border-radius: 8px;
-  padding: 6px 3px 5px;
-  min-height: 80px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  border: 1px solid rgba(255,255,255,0.06);
-  position: relative;
-  transition: box-shadow 0.2s;
+.cell-n{font-family:'Cinzel',serif;font-size:0.65rem;font-weight:700;margin-bottom:1px;line-height:1;}
+.cell-label{font-size:0.42rem;opacity:0.8;margin-bottom:1px;letter-spacing:0.3px;}
+.cell-text{font-size:0.5rem;line-height:1.35;flex:1;opacity:0.9;}
+.sl-badge{position:absolute;top:2px;right:3px;font-size:0.55rem;}
+.tokens{display:flex;flex-wrap:wrap;gap:2px;justify-content:center;margin-top:3px;}
+.token{
+  width:20px;height:20px;border-radius:50%;border:1.5px solid rgba(0,0,0,0.2);
+  display:flex;align-items:center;justify-content:center;
+  font-size:0.6rem;box-shadow:0 2px 6px rgba(0,0,0,0.25);
 }
-.cell-n {
-  font-family:'Cinzel',serif;
-  font-size: 0.65rem;
-  font-weight:700;
-  margin-bottom:1px;
-  line-height:1;
+#legend{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;padding:8px 12px 0;}
+.leg{padding:4px 10px;border-radius:100px;font-size:0.62rem;font-weight:600;white-space:nowrap;}
+#qCard{
+  display:none;margin:10px 12px 0;background:var(--surface);border:1.5px solid var(--gold);
+  border-radius:var(--r);padding:20px 16px 16px;box-shadow:0 4px 20px rgba(176,125,42,0.1);
 }
-.cell-label { font-size:0.42rem; opacity:0.75; margin-bottom:1px; letter-spacing:0.3px; }
-.cell-text  { font-size:0.5rem; line-height:1.35; flex:1; opacity:0.85; }
-.sl-badge   { position:absolute; top:2px; right:3px; font-size:0.55rem; }
-.tokens     { display:flex; flex-wrap:wrap; gap:2px; justify-content:center; margin-top:3px; }
-.token {
-  width:17px; height:17px; border-radius:50%;
-  border:1.5px solid rgba(255,255,255,0.8);
-  display:flex; align-items:center; justify-content:center;
-  font-size:0.42rem; color:white; font-weight:700;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.5);
-}
-
-/* Legend */
-#legend {
-  display:flex; gap:6px; flex-wrap:wrap;
-  justify-content:center;
-  padding: 8px 12px 0;
-}
-.leg {
-  padding:4px 10px;
-  border-radius:100px;
-  font-size:0.62rem;
-  font-weight:600;
-  white-space:nowrap;
-}
-
-/* ── Q Card ── */
-#qCard {
-  display:none;
-  margin: 10px 12px 0;
-  background: var(--surface);
-  border: 1.5px solid var(--gold);
-  border-radius: var(--r);
-  padding: 20px 16px 16px;
-  box-shadow: 0 0 30px rgba(201,168,76,0.12);
-}
-#qType {
-  font-family:'Cinzel',serif;
-  font-size:0.85rem;
-  color:var(--gold2);
-  text-align:center;
-  margin-bottom:10px;
-  letter-spacing:0.5px;
-}
-#qText {
-  font-size:0.98rem;
-  line-height:1.65;
-  text-align:center;
-  color:#ddd;
-  margin-bottom:14px;
-}
-#attemptCounter {
-  text-align:center;
-  font-size:0.72rem;
-  color:var(--muted);
-  margin-bottom:8px;
-  font-style:italic;
-}
-#answerArea {
-  width:100%;
-  padding:12px 14px;
-  border-radius:var(--r-sm);
-  border:1.5px solid var(--border);
-  background: var(--bg);
-  color: var(--text);
-  font-size:0.92rem;
-  font-family:'Lora',serif;
-  resize:none;
-  height:90px;
-  outline:none;
+#qType{font-family:'Cinzel',serif;font-size:0.85rem;color:var(--gold2);text-align:center;margin-bottom:10px;letter-spacing:0.5px;}
+#qText{font-size:0.98rem;line-height:1.65;text-align:center;color:var(--text);margin-bottom:14px;}
+#attemptCounter{text-align:center;font-size:0.72rem;color:var(--muted);margin-bottom:8px;font-style:italic;}
+#answerArea{
+  width:100%;padding:12px 14px;border-radius:var(--r-sm);border:1.5px solid var(--border);
+  background:#fff;color:var(--text);font-size:0.92rem;font-family:'Lora',serif;
+  resize:none;height:90px;outline:none;-webkit-appearance:none;
   transition:border-color 0.2s;
-  -webkit-appearance:none;
 }
-#answerArea:focus { border-color:var(--gold); }
-
-/* Hint — hidden until 2 wrong attempts */
-#hintBox {
-  display:none;
-  background:rgba(201,168,76,0.08);
-  border:1px solid rgba(201,168,76,0.25);
-  border-radius:var(--r-sm);
-  padding:11px 14px;
-  margin-top:10px;
-  font-size:0.82rem;
-  color:var(--gold2);
-  font-style:italic;
-  line-height:1.55;
-  animation: fadeIn 0.4s ease;
+#answerArea:focus{border-color:var(--gold);}
+#hintBox{
+  display:none;background:rgba(176,125,42,0.08);border:1px solid rgba(176,125,42,0.25);
+  border-radius:var(--r-sm);padding:11px 14px;margin-top:10px;
+  font-size:0.82rem;color:var(--gold2);font-style:italic;line-height:1.55;
+  animation:slideUp 0.4s ease;
 }
-@keyframes fadeIn { from{opacity:0;transform:translateY(4px)} to{opacity:1;transform:translateY(0)} }
-
-#feedbackBox {
-  display:none;
-  border-radius:var(--r-sm);
-  padding:11px 14px;
-  margin-top:10px;
-  font-size:0.85rem;
-  line-height:1.5;
-  text-align:center;
-  animation: fadeIn 0.3s ease;
+@keyframes slideUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+#feedbackBox{
+  display:none;border-radius:var(--r-sm);padding:11px 14px;margin-top:10px;
+  font-size:0.85rem;line-height:1.5;text-align:center;animation:slideUp 0.3s ease;
 }
-.fb-correct { background:rgba(34,197,116,0.15); border:1px solid rgba(34,197,116,0.4); color:#5dfc9a; }
-.fb-wrong   { background:rgba(224,82,82,0.13);  border:1px solid rgba(224,82,82,0.35); color:#ff8f7a; }
-
-/* Q buttons */
-.q-btns {
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:8px;
-  margin-top:12px;
+.q-btns{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px;}
+.q-btn{
+  padding:13px 10px;border-radius:var(--r-sm);border:none;font-weight:700;
+  cursor:pointer;font-size:0.85rem;font-family:'Lora',serif;
+  transition:transform 0.12s;-webkit-appearance:none;
 }
-.q-btn {
-  padding:13px 10px;
-  border-radius:var(--r-sm);
-  border:none;
-  font-weight:700;
-  cursor:pointer;
-  font-size:0.85rem;
-  font-family:'Lora',serif;
-  transition:transform 0.12s, opacity 0.12s;
-  -webkit-appearance:none;
+.q-btn:active{transform:scale(0.96);}
+.btn-submit{background:linear-gradient(135deg,var(--gold),var(--gold2));color:#fff;grid-column:1/-1;}
+.btn-skip{background:rgba(0,0,0,0.06);color:var(--muted);border:1px solid rgba(0,0,0,0.1);}
+#controls{
+  margin:10px 12px 0;background:var(--surface);border:1.5px solid var(--border);
+  border-radius:var(--r);padding:18px 16px;text-align:center;
+  box-shadow:0 2px 10px rgba(0,0,0,0.06);
 }
-.q-btn:active { transform:scale(0.96); opacity:0.85; }
-.btn-submit {
-  background:linear-gradient(135deg,var(--gold),#8a5c10);
-  color:#0d1117;
-  grid-column: 1 / -1;
-}
-.btn-skip {
-  background:rgba(255,255,255,0.06);
-  color:var(--muted);
-  border:1px solid rgba(255,255,255,0.1);
-}
-
-/* ── Controls ── */
-#controls {
-  margin:10px 12px 0;
-  background:var(--surface);
-  border:1px solid var(--border);
-  border-radius:var(--r);
-  padding:18px 16px;
-  text-align:center;
-}
-#turnInfo {
-  font-family:'Cinzel',serif;
-  font-size:0.78rem;
-  color:var(--gold2);
-  margin-bottom:14px;
-  letter-spacing:0.5px;
-  line-height:1.5;
-}
-
-/* Die */
-.die {
-  width:80px; height:80px;
-  margin:0 auto 10px;
+#turnInfo{font-family:'Cinzel',serif;font-size:0.78rem;color:var(--gold2);margin-bottom:14px;letter-spacing:0.5px;line-height:1.5;}
+.die{
+  width:80px;height:80px;margin:0 auto 10px;
   background:linear-gradient(145deg,#1f7a50,#0e4a28);
-  border:2px solid rgba(34,197,116,0.5);
-  border-radius:16px;
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  grid-template-rows:repeat(3,1fr);
-  padding:10px; gap:4px;
-  cursor:pointer;
-  box-shadow:0 4px 20px rgba(34,197,116,0.3), inset 0 1px 0 rgba(255,255,255,0.1);
+  border:2px solid rgba(34,197,116,0.5);border-radius:16px;
+  display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);
+  padding:10px;gap:4px;cursor:pointer;
+  box-shadow:0 4px 20px rgba(34,197,116,0.2);touch-action:manipulation;
   transition:opacity 0.2s,transform 0.15s;
-  touch-action: manipulation;
 }
-.die:not(.off):active { transform:scale(0.93); }
-.die.off { opacity:0.3; cursor:not-allowed; }
-.die.rolling { animation:shake 0.55s ease-in-out; }
-.ddot { border-radius:50%; }
-.ddot.on { background:white; box-shadow:0 1px 4px rgba(0,0,0,0.4); }
-@keyframes shake {
+.die:not(.off):active{transform:scale(0.93);}
+.die.off{opacity:0.3;cursor:not-allowed;}
+.die.rolling{animation:shake 0.55s ease-in-out;}
+.ddot{border-radius:50%;}
+.ddot.on{background:white;box-shadow:0 1px 4px rgba(0,0,0,0.4);}
+@keyframes shake{
   0%,100%{transform:translate(0,0) rotate(0)}
   20%{transform:translate(-5px,3px) rotate(-6deg)}
   40%{transform:translate(5px,-3px) rotate(6deg)}
   60%{transform:translate(-3px,4px) rotate(-3deg)}
   80%{transform:translate(3px,-4px) rotate(3deg)}
 }
-#rollResult { color:var(--gold); font-size:0.92rem; min-height:22px; font-style:italic; }
-
-/* ── Log ── */
-#log {
-  margin:10px 12px 0;
-  background:var(--surface);
-  border:1px solid var(--border);
-  border-radius:var(--r);
-  padding:11px 14px;
-  font-size:0.7rem;
-  color:var(--muted);
-  max-height:95px;
-  overflow-y:auto;
-  -webkit-overflow-scrolling:touch;
+#rollResult{color:var(--gold2);font-size:0.92rem;min-height:22px;font-style:italic;}
+#log{
+  margin:10px 12px 0;background:var(--surface);border:1.5px solid var(--border);
+  border-radius:var(--r);padding:11px 14px;font-size:0.7rem;color:var(--muted);
+  max-height:95px;overflow-y:auto;
 }
-.log-e { padding:3px 0; border-bottom:1px solid rgba(255,255,255,0.04); }
-
-/* ── Answer Key ── */
-#answersSection {
-  margin:12px 12px 0;
-  background:var(--surface);
-  border:1px solid var(--border);
-  border-radius:var(--r);
-  padding:20px 16px;
-}
-#answersSection h2 {
-  font-family:'Cinzel',serif;
-  color:var(--gold);
-  font-size:0.82rem;
-  margin-bottom:14px;
-  text-align:center;
-  padding-bottom:10px;
-  border-bottom:1px solid var(--border);
-  letter-spacing:0.5px;
-}
-.ans-item {
-  margin-bottom:13px;
-  padding:12px;
-  background:rgba(0,0,0,0.2);
-  border-radius:var(--r-sm);
-  border-left:3px solid var(--gold);
-}
-.ans-q { font-weight:700; color:var(--gold2); font-size:0.8rem; margin-bottom:5px; }
-.ans-a { font-size:0.8rem; color:var(--text); line-height:1.6; opacity:0.88; }
-
-/* Credit */
-.credit {
-  text-align:center;
-  font-size:0.68rem;
-  color:var(--muted);
-  margin-top:16px;
-  padding:0 16px 8px;
-  font-style:italic;
-  letter-spacing:0.3px;
-}
+.log-e{padding:3px 0;border-bottom:1px solid rgba(0,0,0,0.04);}
+.credit{text-align:center;font-size:0.68rem;color:var(--muted);margin-top:16px;padding:0 16px 8px;font-style:italic;}
 </style>
 </head>
 <body>
@@ -443,6 +269,7 @@ header p { color: var(--muted); font-size: 0.72rem; margin-top:2px; font-style:i
 <div id="joinScreen">
   <div class="join-card">
     <h2>Enter the Community</h2>
+    <p class="sub">Your banner will be revealed after you join ✨</p>
     <input class="field" id="nameInput" placeholder="Your name" maxlength="14" autocomplete="off"/>
     <input class="field" id="roomInput" placeholder="Room code (e.g. class1)" maxlength="12" autocomplete="off"/>
     <div class="err" id="errMsg"></div>
@@ -451,20 +278,50 @@ header p { color: var(--muted); font-size: 0.72rem; margin-top:2px; font-style:i
   </div>
 </div>
 
+<!-- WARNING MODAL -->
+<div id="warnModal">
+  <div class="warn-card">
+    <span class="warn-emoji-big">⚠️</span>
+    <h3>تحذير!</h3>
+    <p>هذا الاسم غير لائق<br><strong>يرحم امك</strong> العب نضيف<br>ممكن تكمل بس راعي أدبك 😤</p>
+    <button class="warn-continue" onclick="continueWithWarnedName()">أكمل على مسؤوليتي</button>
+    <button class="warn-change" onclick="closeWarnModal()">أغيّر اسمي</button>
+  </div>
+</div>
+
+<!-- BANNER REVEAL (fullscreen, after join) -->
+<div id="bannerReveal">
+  <div class="reveal-particles" id="revealParticles"></div>
+  <div id="revealIcon"></div>
+  <div id="revealLabel"></div>
+  <div id="revealName"></div>
+  <div id="revealSub">Your banner has been revealed</div>
+  <div id="revealCountdown"></div>
+</div>
+
+<!-- WELCOME EMOJI MODAL -->
+<div id="welcomeModal">
+  <div class="welcome-card" id="welcomeCard">
+    <div class="wc-inner">
+      <span class="wc-emoji" id="wcEmoji"></span>
+      <div class="wc-title">YOUR SYMBOL</div>
+      <div class="wc-name" id="wcName"></div>
+      <div class="wc-banner" id="wcBanner"></div>
+      <button class="wc-btn" onclick="closeWelcomeAndStart()">Enter the Community →</button>
+    </div>
+  </div>
+</div>
+
 <!-- GAME -->
 <div id="gameScreen">
   <div id="winnerBanner"></div>
-
+  <div id="gameBannerStrip"></div>
   <div id="playersBar"></div>
-
   <div id="legend">
-    <span class="leg" style="background:var(--ladder-bg);color:var(--green);border:1px solid rgba(34,197,116,0.3)">🪜 Ladder = Move Up</span>
-    <span class="leg" style="background:var(--snake-bg);color:var(--red);border:1px solid rgba(224,82,82,0.3)">🐍 Snake = Move Down</span>
+    <span class="leg" style="background:var(--ladder-bg);color:var(--green);border:1px solid rgba(26,158,92,0.3)">🪜 Ladder = Move Up</span>
+    <span class="leg" style="background:var(--snake-bg);color:var(--red);border:1px solid rgba(192,57,43,0.3)">🐍 Snake = Move Down</span>
   </div>
-
   <div id="boardWrap"><div id="boardGrid"></div></div>
-
-  <!-- Q Card -->
   <div id="qCard">
     <div id="qType"></div>
     <p id="qText"></p>
@@ -477,8 +334,6 @@ header p { color: var(--muted); font-size: 0.72rem; margin-top:2px; font-style:i
       <button class="q-btn btn-skip" onclick="skipQ()">Skip →</button>
     </div>
   </div>
-
-  <!-- Controls -->
   <div id="controls">
     <div id="turnInfo">Loading...</div>
     <div class="die" id="die" onclick="rollDice()">
@@ -488,15 +343,7 @@ header p { color: var(--muted); font-size: 0.72rem; margin-top:2px; font-style:i
     </div>
     <div id="rollResult"></div>
   </div>
-
   <div id="log"><div style="text-align:center;font-style:italic">Game log...</div></div>
-
-  <!-- Answer Key -->
-  <div id="answersSection">
-    <h2>📋 Answer Key — Teacher Only</h2>
-    <div id="answersList"></div>
-  </div>
-
   <p class="credit">Designed by Khalid Ahmed Al Seoud</p>
 </div>
 
@@ -515,13 +362,218 @@ const app = initializeApp({
 });
 const db = getDatabase(app);
 
-const COLORS = ["#e05252","#5b9cf6","#f0a830","#a374e0"];
-const FACES = {1:[5],2:[2,8],3:[1,5,9],4:[1,3,7,9],5:[1,3,5,7,9],6:[1,3,4,6,7,9]};
+const COLORS = ["#c0392b","#2563a8","#d4750a","#7c3aed"];
+const FACES  = {1:[5],2:[2,8],3:[1,5,9],4:[1,3,7,9],5:[1,3,5,7,9],6:[1,3,4,6,7,9]};
+const SNAKES  = {9:3,15:6,17:11};
+const LADDERS = {4:8,11:14,13:18};
+const WARNED  = ["osama","محنا","muhanna","اسامه","اسامة"];
 
-const SNAKES  = {9:3, 15:6, 17:11};
-const LADDERS = {4:8, 11:14, 13:18};
+// 7 Banners — assigned randomly, one per player, no repeats in same room
+const BANNERS = [
+  {id:1,bg:"linear-gradient(135deg,#1a3a2a,#0d2016)",color:"#c9a84c",icon:"🌲",label:"THE FOREST"},
+  {id:2,bg:"linear-gradient(135deg,#1e2a4a,#0a1428)",color:"#5b9cf6",icon:"🌊",label:"THE WATERS"},
+  {id:3,bg:"linear-gradient(135deg,#4a1a1a,#280a0a)",color:"#e05252",icon:"🔥",label:"THE FLAME"},
+  {id:4,bg:"linear-gradient(135deg,#f5f0e0,#e8d9b0)",color:"#8a5c10",icon:"☀️",label:"THE LIGHT"},
+  {id:5,bg:"linear-gradient(135deg,#1a1a3a,#0d0d28)",color:"#c084fc",icon:"⭐",label:"THE STARS"},
+  {id:6,bg:"linear-gradient(135deg,#0a2a1a,#051408)",color:"#22c574",icon:"🏔️",label:"ELSEWHERE"},
+  {id:7,bg:"linear-gradient(135deg,#2a1a0a,#1a0a00)",color:"#f4a85a",icon:"🌙",label:"THE DUSK"},
+];
 
-const SQ = [
+// Emoji pool — assigned randomly, no repeats in same room
+const EMOJI_POOL = ["🦁","🐯","🦊","🐺","🦅","🐉","🦋","🌊","⚡","🌙","🔥","🌿","🏔️","⭐","🎯","🌸"];
+
+let myName="", roomId="", myId="", rolling=false;
+let myBanner=null, myEmoji="❓";
+let pendingPos=null, pendingAgain=false, pendingSkip=false, pendingSqType=null;
+let wrongAttempts=0, currentPlayers={}, currentTurn="";
+let pendingJoinData=null;
+let revealTimer=null;
+
+// ── Assign unique banner from room ──
+function assignBanner(usedBannerIds){
+  const available = BANNERS.filter(b => !usedBannerIds.includes(b.id));
+  if(!available.length) return BANNERS[Math.floor(Math.random()*BANNERS.length)];
+  return available[Math.floor(Math.random()*available.length)];
+}
+
+// ── Assign unique emoji from room ──
+function assignEmoji(usedEmojis){
+  const available = EMOJI_POOL.filter(e => !usedEmojis.includes(e));
+  if(!available.length) return EMOJI_POOL[Math.floor(Math.random()*EMOJI_POOL.length)];
+  return available[Math.floor(Math.random()*available.length)];
+}
+
+// ── Warning Modal ──
+window.closeWarnModal = () => {
+  document.getElementById('warnModal').classList.remove('show');
+  pendingJoinData = null;
+};
+window.continueWithWarnedName = async () => {
+  document.getElementById('warnModal').classList.remove('show');
+  if(pendingJoinData) await doActualJoin(pendingJoinData.name, pendingJoinData.room);
+  pendingJoinData = null;
+};
+
+// ── Join Game ──
+window.joinGame = async function(){
+  const name = document.getElementById("nameInput").value.trim();
+  const room = document.getElementById("roomInput").value.trim().toLowerCase();
+  const err  = document.getElementById("errMsg");
+  if(!name||!room){ err.textContent="Enter name and room code!"; return; }
+  err.textContent = "";
+  if(WARNED.some(b => name.toLowerCase().includes(b))){
+    pendingJoinData = {name, room};
+    document.getElementById('warnModal').classList.add('show');
+    return;
+  }
+  await doActualJoin(name, room);
+};
+
+async function doActualJoin(name, room){
+  const err = document.getElementById("errMsg");
+  const snap = await get(ref(db,`rooms/${room}`));
+  const data  = snap.val()||{};
+  const pl    = data.players||{};
+  if(Object.keys(pl).length>=4){ err.textContent="Room is full! Max 4 players."; return; }
+
+  myName = name; roomId = room; myId = name+"_"+Date.now();
+  const color = COLORS[Object.keys(pl).length];
+
+  // Assign unique banner
+  const usedBannerIds = Object.values(pl).map(p => p.bannerId||0);
+  myBanner = assignBanner(usedBannerIds);
+
+  // Assign unique emoji
+  const usedEmojis = Object.values(pl).map(p => p.emoji||"");
+  myEmoji = assignEmoji(usedEmojis);
+
+  await update(ref(db,`rooms/${room}/players/${myId}`),{
+    name, color, position:0, id:myId,
+    emoji:myEmoji, bannerId:myBanner.id,
+    bannerLabel:myBanner.label, bannerColor:myBanner.color,
+    bannerBg:myBanner.bg, bannerIcon:myBanner.icon
+  });
+  if(!data.currentTurn) await update(ref(db,`rooms/${room}`),{currentTurn:myId});
+
+  document.getElementById("joinScreen").style.display="none";
+
+  // 1) Show fullscreen banner reveal
+  showBannerReveal(myBanner, name, myEmoji, () => {
+    // 2) Then show welcome emoji modal
+    showWelcomeModal(name, myEmoji, myBanner, () => {
+      startGame();
+    });
+  });
+}
+
+// ── Fullscreen Banner Reveal ──
+function showBannerReveal(banner, name, emoji, cb){
+  const overlay = document.getElementById('bannerReveal');
+  overlay.style.background = banner.bg;
+  document.getElementById('revealIcon').textContent  = banner.icon;
+  const lbl = document.getElementById('revealLabel');
+  lbl.style.color = banner.color; lbl.textContent = banner.label;
+  const nm = document.getElementById('revealName');
+  nm.style.color = banner.color+'cc'; nm.textContent = name+" "+emoji;
+  const sub = document.getElementById('revealSub');
+  sub.style.color = banner.color+'99';
+  const cd = document.getElementById('revealCountdown');
+  cd.style.color = banner.color; cd.style.borderColor = banner.color+'55';
+
+  // Spawn particles
+  const pc = document.getElementById('revealParticles');
+  pc.innerHTML="";
+  for(let i=0;i<12;i++){
+    setTimeout(()=>{
+      const p = document.createElement('div');
+      p.className='rp';
+      p.textContent = banner.icon;
+      p.style.left  = Math.random()*90+5+'%';
+      p.style.top   = Math.random()*80+10+'%';
+      p.style.animationDelay = '0s';
+      p.style.animationDuration = (2+Math.random())+'s';
+      pc.appendChild(p);
+      setTimeout(()=>p.remove(), 3000);
+    }, i*200);
+  }
+
+  overlay.classList.add('show');
+  let secs=6; cd.textContent=secs;
+  if(revealTimer) clearInterval(revealTimer);
+  revealTimer = setInterval(()=>{
+    secs--; cd.textContent=secs;
+    if(secs<=0){
+      clearInterval(revealTimer); revealTimer=null;
+      overlay.classList.remove('show');
+      cb();
+    }
+  },1000);
+}
+
+// ── Welcome Emoji Modal ──
+function showWelcomeModal(name, emoji, banner, cb){
+  const card = document.getElementById('welcomeCard');
+  card.style.background = banner.bg;
+  document.getElementById('wcEmoji').textContent  = emoji;
+  const nm = document.getElementById('wcName');
+  nm.style.color = banner.color; nm.textContent = name;
+  const bn = document.getElementById('wcBanner');
+  bn.style.color = banner.color+'cc'; bn.textContent = banner.icon+" "+banner.label;
+  // Particles
+  for(let i=0;i<10;i++){
+    setTimeout(()=>{
+      const p = document.createElement('div');
+      p.className='wc-particle';
+      p.textContent = emoji;
+      const angle = Math.random()*360;
+      const dist  = 80+Math.random()*80;
+      p.style.setProperty('--tx', Math.cos(angle*Math.PI/180)*dist+'px');
+      p.style.setProperty('--ty', Math.sin(angle*Math.PI/180)*dist+'px');
+      p.style.left = '50%'; p.style.top='40%';
+      p.style.animationDelay = (i*0.1)+'s';
+      p.style.animationDuration = (1.2+Math.random()*0.8)+'s';
+      card.appendChild(p);
+      setTimeout(()=>p.remove(),2500);
+    }, i*100);
+  }
+  document.getElementById('welcomeModal').classList.add('show');
+  window._welcomeCb = cb;
+}
+
+window.closeWelcomeAndStart = function(){
+  document.getElementById('welcomeModal').classList.remove('show');
+  if(window._welcomeCb) window._welcomeCb();
+};
+
+// ── Start Game ──
+function startGame(){
+  document.getElementById("gameScreen").style.display="block";
+  const b = myBanner;
+  const strip = document.getElementById("gameBannerStrip");
+  strip.style.background = b.bg; strip.style.color = b.color;
+  strip.innerHTML = `<span style="font-size:1rem;margin-right:6px">${b.icon}</span><span>${b.label}</span><span style="font-size:1rem;margin-left:6px">${myEmoji}</span>`;
+  buildBoard(); showFace(1);
+
+  onValue(ref(db,`rooms/${roomId}`), snap=>{
+    const s = snap.val(); if(!s) return;
+    const pl = s.players||{}; const ct = s.currentTurn;
+    currentPlayers = pl; currentTurn = ct;
+    renderTokens(pl); renderPlayers(pl,ct);
+    const ami = pl[ct]?.name===myName;
+    document.getElementById("turnInfo").textContent = ami
+      ? `🎲 Your turn! Roll the dice!`
+      : `⏳ Waiting for ${pl[ct]?.emoji||""} ${pl[ct]?.name||"..."}`;
+    document.getElementById("die").className = "die"+(ami?"":" off");
+    Object.values(pl).forEach(p=>{
+      if((p.position??0)>=21 && document.getElementById("winnerBanner").style.display!=="block"){
+        applyWinnerBanner(p.name, p.emoji||"🌟", p.bannerBg||b.bg, p.bannerColor||b.color);
+      }
+    });
+  });
+}
+
+// ── Board ──
+const SQ=[
   {n:0,  type:"start",    text:"START\nThe Community"},
   {n:1,  type:"vocab",    text:'Define\n"Apprehensive"'},
   {n:2,  type:"good",     text:"Move ahead\n2 spaces →"},
@@ -545,42 +597,35 @@ const SQ = [
   {n:20, type:"good",     text:"You found\nElsewhere!\nYou win! 🌟"},
   {n:21, type:"finish",   text:"FINISH\nElsewhere 🏔️"},
 ];
-
-const CS = {
-  start:    {bg:"#0f1623",c:"#c9a84c",l:""},
-  finish:   {bg:"#0f1623",c:"#c9a84c",l:""},
-  vocab:    {bg:"#111e38",c:"#5b9cf6",l:"📚 Vocab"},
-  question: {bg:"#201808",c:"#f0a830",l:"❓ Q"},
-  memory:   {bg:"#1a0f30",c:"#c084fc",l:"🌟 Theme"},
-  good:     {bg:"#081a10",c:"#22c574",l:"✅ Bonus"},
-  bad:      {bg:"#1a0808",c:"#e05252",l:"⚠️"},
-  snake:    {bg:"#1a0a0a",c:"#e05252",l:"🐍 Snake"},
-  ladder:   {bg:"#081620",c:"#22c574",l:"🪜 Ladder"},
+const CS={
+  start:   {bg:"#f0ede4",c:"#b07d2a",l:""},
+  finish:  {bg:"#f0ede4",c:"#b07d2a",l:""},
+  vocab:   {bg:"#e8f0f8",c:"#2563a8",l:"📚 Vocab"},
+  question:{bg:"#faf0e0",c:"#c07010",l:"❓ Q"},
+  memory:  {bg:"#f5eaff",c:"#7c3aed",l:"🌟 Theme"},
+  good:    {bg:"#e8f5ed",c:"#1a9e5c",l:"✅ Bonus"},
+  bad:     {bg:"#fde8e8",c:"#c0392b",l:"⚠️"},
+  snake:   {bg:"#fde8e8",c:"#c0392b",l:"🐍 Snake"},
+  ladder:  {bg:"#e8f5ed",c:"#1a9e5c",l:"🪜 Ladder"},
 };
-
-const QA = {
-  1:{q:'Define "Apprehensive".',hint:"Think about how Jonas felt before the Ceremony — was he calm or worried?",keys:["worried","anxious","nervous","fearful","uneasy","scared","dread"],answer:"Apprehensive means feeling worried, anxious, or nervous about something that is going to happen. Jonas felt apprehensive before the Ceremony of Twelve because he did not know what Assignment he would receive."},
-  3:{q:"Why does Jonas feel different from others?",hint:"Think about his ability to see colors when others can't — what does 'Seeing Beyond' mean?",keys:["color","see beyond","memories","different","special","receiver","red"],answer:"Jonas feels different because he can perceive colors (like red) through 'Seeing Beyond', while others only see grey due to Sameness. He also has the capacity to hold memories, making him uniquely suited to be the Receiver of Memory."},
-  4:{q:"🪜 What is the role of the Receiver of Memory?",hint:"The Giver passes something the whole community gave up. Why does one person need to hold it all?",keys:["memories","hold","receive","transmit","wisdom","community","protect","past"],answer:"The Receiver holds all memories of the past — joy, pain, color, music, love — on behalf of the entire Community. The community gave up memories for Sameness, so one person must keep them to provide wisdom when the Elders need guidance."},
-  5:{q:'What does "Released" really mean?',hint:"Jonas watched his father do something to a baby on video. It was not a journey...",keys:["death","killed","injection","die","lethal","euthanasia","murder"],answer:"'Release' is a euphemism for death by lethal injection. People believe it is a peaceful farewell, but Jonas discovers the truth when he watches his father inject and kill an infant (a twin) who was to be released."},
-  6:{q:'Define "Remorse".',hint:"Think of feeling very guilty after doing something wrong. That deep regret is remorse.",keys:["regret","guilt","sorry","sorrow","shame","sad","feel bad"],answer:"Remorse means a deep feeling of guilt and regret for something wrong you have done. Jonas experiences remorse when he realizes what 'release' actually means and feels guilt for not discovering the truth sooner."},
-  8:{q:'What is "Sameness" in the Community?',hint:"The Community removed all differences — weather, color, emotions, choices. Think about why.",keys:["control","same","eliminate","color","choice","emotion","weather","difference","equal"],answer:"Sameness is the state achieved by eliminating all differences — no colors, no extreme weather, no individual choice, suppressed emotions. It was designed to create equality and prevent conflict, but it also removed beauty, love, and true freedom."},
-  9:{q:"🐍 Who is Rosemary and what happened to her?",hint:"She was the Receiver before Jonas. She could not bear the pain of memories and made a permanent decision.",keys:["receiver","released","death","memories","failed","chose","left","apply","injection"],answer:"Rosemary was the previous Receiver, selected ten years before Jonas. Unable to bear painful memories, she applied for Release herself — meaning she was killed by injection. Her death caused disaster as all her memories flooded back into the Community."},
-  10:{q:'Define "Stirrings".',hint:"Jonas had a warm dream about someone he cared for. His mother gave him a pill after he described it at breakfast.",keys:["feeling","desire","romantic","pill","dream","suppress","emotions","arousal","love"],answer:"Stirrings are romantic or sexual feelings and dreams that begin in adolescence. In the Community they are seen as dangerous and suppressed with daily pills to maintain emotional control and Sameness."},
-  11:{q:"🪜 How does Jonas transmit memories to Gabriel?",hint:"Jonas did it by touch — the same way the Giver transmits to him. It happened by accident one night.",keys:["touch","hand","back","accidental","transmit","memory","calm","sleep","pat"],answer:"Jonas transmits memories through physical touch — by placing his hand on Gabriel's back while remembering a peaceful sail on a lake. It happened accidentally when he tried to soothe the baby to sleep, the same method the Giver uses with Jonas."},
-  12:{q:"Why are memories important in the novel?",hint:"Without memories, can people make good decisions? Think about what the Elders ask the Giver for.",keys:["wisdom","pain","joy","decision","learn","history","guide","experience","understand","past"],answer:"Memories contain the full human experience — joy, love, pain, and wisdom. They allow people to learn from the past and make better decisions. The Giver preserves them because without memory, the Community cannot understand the consequences of its choices."},
-  13:{q:"🪜 Describe the relationship between Jonas and the Giver.",hint:"It's more than student and teacher. Think about loneliness, hope, and what they share together.",keys:["trust","love","mentor","father","hope","lonely","friendship","student","teach","bond","son"],answer:"Their relationship is deeply meaningful — part mentor and student, part surrogate father and son. The Giver has been isolated for years. Jonas gives him hope and someone to share the burden of memories. They bond through trust, shared pain, and a dream of change."},
-  15:{q:"🐍 What was the Ceremony of Twelve?",hint:"It happened once a year for all twelve-year-olds and decided their entire future life in one moment.",keys:["assignment","career","ceremony","twelve","job","elder","community","future","role","chief"],answer:"The Ceremony of Twelve is the annual event where each twelve-year-old receives their permanent Assignment — the career chosen by the Committee of Elders. It is the most significant ceremony as it determines a person's entire future role in the Community."},
-  16:{q:"Is freedom worth the pain? Use the novel to support your answer.",hint:"Jonas gave up safety for color, music, and love — but gained hunger and cold. Was the trade worth it?",keys:["freedom","pain","choice","worth","color","love","music","sacrifice","escape","memory","real"],answer:"Open-ended. Model answer: Yes — Jonas chose to escape despite danger because he wanted real emotions, color, music, and love. The novel suggests a life of true meaning, even with suffering, is better than a painless life of control and emptiness."},
-  17:{q:"🐍 Why did Jonas stop taking his pills?",hint:"The pills suppressed something important. What did Jonas want to feel again after receiving memories of love?",keys:["stirrings","feelings","emotions","love","real","experience","suppress","pill","stop","authentic"],answer:"Jonas stopped taking his pills because they suppressed his genuine emotions. After receiving memories of love and joy, he wanted to feel real emotions. Stopping the pills allowed authentic feelings, but also made him realize how emotionally empty everyone else in the Community was."},
-  18:{q:"What choice did Jonas make at the end?",hint:"He took Gabriel and ran toward Elsewhere. Why did he leave everything behind?",keys:["escape","run","gabriel","elsewhere","leave","community","memories","freedom","sled","hope","save"],answer:"Jonas chose to escape from the Community, taking baby Gabriel to save him from being released (killed). He fled toward Elsewhere. By leaving, all his memories returned to the Community. He finds a sled and sees lights and hears music — suggesting a loving world beyond."},
-  19:{q:"What does 'Elsewhere' represent in the novel?",hint:"Is it just a place? Think about what Jonas found there — lights, music, love. What is the opposite of the Community?",keys:["freedom","hope","real","love","music","color","outside","world","life","true"],answer:"Elsewhere represents true freedom, genuine human emotion, and real life — the opposite of the controlled, grey Community. For Jonas it symbolizes hope: a world where color, music, love, and choice exist. It may also represent the real world outside any totalitarian system."},
+const QA={
+  1:{q:'Define "Apprehensive".',hint:"Think about how Jonas felt before the Ceremony — was he calm or worried?",keys:["worried","anxious","nervous","fearful","uneasy","scared","dread"]},
+  3:{q:"Why does Jonas feel different from others?",hint:"Think about his ability to see colors when others can't.",keys:["color","see beyond","memories","different","special","receiver","red"]},
+  4:{q:"🪜 What is the role of the Receiver of Memory?",hint:"The Giver passes something the whole community gave up.",keys:["memories","hold","receive","transmit","wisdom","community","protect","past"]},
+  5:{q:'What does "Released" really mean?',hint:"Jonas watched his father do something to a baby on video. It was not a journey...",keys:["death","killed","injection","die","lethal","euthanasia","murder"]},
+  6:{q:'Define "Remorse".',hint:"Think of feeling very guilty after doing something wrong.",keys:["regret","guilt","sorry","sorrow","shame","sad","feel bad"]},
+  8:{q:'What is "Sameness" in the Community?',hint:"The Community removed all differences — weather, color, emotions, choices.",keys:["control","same","eliminate","color","choice","emotion","weather","difference","equal"]},
+  9:{q:"🐍 Who is Rosemary and what happened to her?",hint:"She was the Receiver before Jonas. She could not bear the pain of memories.",keys:["receiver","released","death","memories","failed","chose","left","apply","injection"]},
+  10:{q:'Define "Stirrings".',hint:"Jonas had a warm dream about someone he cared for. His mother gave him a pill after.",keys:["feeling","desire","romantic","pill","dream","suppress","emotions","arousal","love"]},
+  11:{q:"🪜 How does Jonas transmit memories to Gabriel?",hint:"Jonas did it by touch — the same way the Giver transmits to him.",keys:["touch","hand","back","accidental","transmit","memory","calm","sleep","pat"]},
+  12:{q:"Why are memories important in the novel?",hint:"Without memories, can people make good decisions?",keys:["wisdom","pain","joy","decision","learn","history","guide","experience","understand","past"]},
+  13:{q:"🪜 Describe the relationship between Jonas and the Giver.",hint:"It's more than student and teacher. Think about loneliness, hope, and what they share.",keys:["trust","love","mentor","father","hope","lonely","friendship","student","teach","bond","son"]},
+  15:{q:"🐍 What was the Ceremony of Twelve?",hint:"It happened once a year for all twelve-year-olds and decided their entire future.",keys:["assignment","career","ceremony","twelve","job","elder","community","future","role","chief"]},
+  16:{q:"Is freedom worth the pain? Use the novel to support your answer.",hint:"Jonas gave up safety for color, music, and love — but gained hunger and cold.",keys:["freedom","pain","choice","worth","color","love","music","sacrifice","escape","memory","real"]},
+  17:{q:"🐍 Why did Jonas stop taking his pills?",hint:"The pills suppressed something important. What did Jonas want to feel again?",keys:["stirrings","feelings","emotions","love","real","experience","suppress","pill","stop","authentic"]},
+  18:{q:"What choice did Jonas make at the end?",hint:"He took Gabriel and ran toward Elsewhere.",keys:["escape","run","gabriel","elsewhere","leave","community","memories","freedom","sled","hope","save"]},
+  19:{q:"What does 'Elsewhere' represent in the novel?",hint:"Is it just a place? Think about what Jonas found there — lights, music, love.",keys:["freedom","hope","real","love","music","color","outside","world","life","true"]},
 };
-
-let myName="",roomId="",myId="",rolling=false;
-let pendingPos=null,pendingAgain=false,pendingSkip=false,pendingSqType=null;
-let wrongAttempts=0;
-let currentPlayers={},currentTurn="";
 
 function buildBoard(){
   const g=document.getElementById("boardGrid"); g.innerHTML="";
@@ -588,11 +633,11 @@ function buildBoard(){
     const t=CS[sq.type]||CS.vocab;
     const d=document.createElement("div");
     d.className="cell"; d.id="cell-"+sq.n;
-    d.style.background=t.bg; d.style.borderColor=t.c+"33";
+    d.style.background=t.bg; d.style.borderColor=t.c+"44";
     let h="";
     if(sq.n>0&&sq.n<21) h+=`<div class="cell-n" style="color:${t.c}">${sq.n}</div>`;
     if(t.l) h+=`<div class="cell-label" style="color:${t.c}">${t.l}</div>`;
-    h+=`<div class="cell-text" style="color:${t.c}99">${sq.text.replace(/\n/g,"<br>")}</div>`;
+    h+=`<div class="cell-text" style="color:${t.c}cc">${sq.text.replace(/\n/g,"<br>")}</div>`;
     if(SNAKES[sq.n])  h+=`<div class="sl-badge">🐍→${SNAKES[sq.n]}</div>`;
     if(LADDERS[sq.n]) h+=`<div class="sl-badge">🪜→${LADDERS[sq.n]}</div>`;
     h+=`<div class="tokens" id="tok-${sq.n}"></div>`;
@@ -600,20 +645,11 @@ function buildBoard(){
   });
 }
 
-function buildAnswerKey(){
-  const list=document.getElementById("answersList"); list.innerHTML="";
-  Object.entries(QA).forEach(([sq,qa])=>{
-    const div=document.createElement("div"); div.className="ans-item";
-    div.innerHTML=`<div class="ans-q">Square ${sq}: ${qa.q}</div><div class="ans-a">${qa.answer}</div>`;
-    list.appendChild(div);
-  });
-}
-
 function renderTokens(pl){
   document.querySelectorAll(".tokens").forEach(t=>t.innerHTML="");
   Object.values(pl).forEach(p=>{
     const c=document.getElementById("tok-"+(p.position??0));
-    if(c) c.innerHTML+=`<div class="token" style="background:${p.color}" title="${p.name}">${p.name[0].toUpperCase()}</div>`;
+    if(c) c.innerHTML+=`<div class="token" style="background:${p.color};border-color:${p.bannerColor||p.color}" title="${p.name} ${p.emoji||''}">${p.emoji||p.name[0]}</div>`;
   });
 }
 
@@ -622,10 +658,10 @@ function renderPlayers(pl,ct){
   Object.entries(pl).forEach(([id,p])=>{
     const d=document.createElement("div");
     d.className="pchip"+(id===ct?" myturn":"");
-    d.style.background=p.color+"1a"; d.style.color=p.color;
-    d.style.borderColor=id===ct?p.color:"transparent";
-    if(id===ct) d.style.boxShadow=`0 0 12px ${p.color}44`;
-    d.textContent=`${p.name} · ${p.position??0}`;
+    d.style.background=p.color+"18"; d.style.color=p.color;
+    d.style.borderColor=id===ct?p.color:"rgba(0,0,0,0.1)";
+    if(id===ct) d.style.boxShadow=`0 0 10px ${p.color}44`;
+    d.textContent=`${p.emoji||""} ${p.name} · ${p.position??0}`;
     bar.appendChild(d);
   });
 }
@@ -643,7 +679,7 @@ function addLog(m){
 function updateAttemptCounter(){
   const el=document.getElementById("attemptCounter");
   if(wrongAttempts===0){el.textContent="";return;}
-  el.textContent=`Attempts: ${wrongAttempts} ${wrongAttempts>=2?"(Hint unlocked below 💡)":"(1 more wrong → hint unlocks)"}`;
+  el.textContent=`Attempts: ${wrongAttempts} ${wrongAttempts>=2?"(Hint unlocked 💡)":"(1 more wrong → hint unlocks)"}`;
 }
 
 function showQCard(sqN,type){
@@ -653,11 +689,8 @@ function showQCard(sqN,type){
   document.getElementById("qText").textContent=qa.q;
   document.getElementById("answerArea").value="";
   document.getElementById("hintBox").style.display="none";
-  document.getElementById("hintBox").textContent="";
   document.getElementById("feedbackBox").style.display="none";
-  document.getElementById("feedbackBox").textContent="";
-  wrongAttempts=0;
-  updateAttemptCounter();
+  wrongAttempts=0; updateAttemptCounter();
   document.getElementById("qCard").style.display="block";
   setTimeout(()=>document.getElementById("answerArea").focus(),300);
   return true;
@@ -665,64 +698,55 @@ function showQCard(sqN,type){
 
 window.submitAnswer=async function(){
   const ans=document.getElementById("answerArea").value.trim().toLowerCase();
-  if(!ans){return;}
+  if(!ans) return;
   const sq=SQ.find(s=>s.n===pendingPos);
   const qa=sq?QA[sq.n]:null;
   const fb=document.getElementById("feedbackBox");
   fb.style.display="block";
-
   if(qa){
     const matched=qa.keys.some(k=>ans.includes(k.toLowerCase()));
     if(matched){
-      fb.className="feedbackBox fb-correct";
-      fb.style.cssText="display:block;border-radius:10px;padding:11px 14px;margin-top:10px;font-size:0.85rem;line-height:1.5;text-align:center;animation:fadeIn 0.3s ease;background:rgba(34,197,116,0.15);border:1px solid rgba(34,197,116,0.4);color:#5dfc9a;";
+      fb.style.cssText="display:block;border-radius:10px;padding:11px 14px;margin-top:10px;font-size:0.85rem;line-height:1.5;text-align:center;background:rgba(26,158,92,0.12);border:1px solid rgba(26,158,92,0.35);color:#0e7040;";
       fb.textContent="✅ Correct! Moving forward...";
       setTimeout(()=>finishQuestion(true),1500);
     } else {
       wrongAttempts++;
-      fb.className="feedbackBox fb-wrong";
-      fb.style.cssText="display:block;border-radius:10px;padding:11px 14px;margin-top:10px;font-size:0.85rem;line-height:1.5;text-align:center;animation:fadeIn 0.3s ease;background:rgba(224,82,82,0.13);border:1px solid rgba(224,82,82,0.35);color:#ff8f7a;";
-      fb.textContent=wrongAttempts>=2
-        ?"❌ Not quite. A hint has appeared below! 💡"
-        :"❌ Not quite. Try again!";
+      fb.style.cssText="display:block;border-radius:10px;padding:11px 14px;margin-top:10px;font-size:0.85rem;line-height:1.5;text-align:center;background:rgba(192,57,43,0.1);border:1px solid rgba(192,57,43,0.3);color:#a02010;";
+      fb.textContent=wrongAttempts>=2?"❌ Not quite. Hint appeared below! 💡":"❌ Not quite. Try again!";
       updateAttemptCounter();
-      // Show hint after 2 wrong attempts
       if(wrongAttempts>=2){
         const h=document.getElementById("hintBox");
-        h.style.display="block";
-        h.textContent="💡 Hint: "+qa.hint;
+        h.style.display="block"; h.textContent="💡 Hint: "+qa.hint;
       }
     }
   } else {
-    fb.style.cssText="display:block;border-radius:10px;padding:11px 14px;margin-top:10px;font-size:0.85rem;line-height:1.5;text-align:center;animation:fadeIn 0.3s ease;background:rgba(201,168,76,0.15);border:1px solid rgba(201,168,76,0.3);color:#e8c97a;";
+    fb.style.cssText="display:block;border-radius:10px;padding:11px 14px;margin-top:10px;font-size:0.85rem;line-height:1.5;text-align:center;background:rgba(176,125,42,0.12);border:1px solid rgba(176,125,42,0.3);color:#8a5c10;";
     fb.textContent="✅ Noted! Moving on...";
     setTimeout(()=>finishQuestion(true),1500);
   }
 };
 
-window.skipQ=function(){ finishQuestion(false); };
+window.skipQ=()=>finishQuestion(false);
+
+function applyWinnerBanner(name, emoji, bg, color){
+  const wb=document.getElementById("winnerBanner");
+  wb.style.display="block"; wb.style.background=bg||"#1a3a2a"; wb.style.color=color||"#c9a84c";
+  wb.innerHTML=`${emoji} ${name} reached Elsewhere and wins! 🌟 ${emoji}`;
+}
 
 async function finishQuestion(passed){
   document.getElementById("qCard").style.display="none";
   let finalPos=pendingPos;
-
   if(pendingSqType==="snake"){
-    if(passed){ addLog(`${myName} escaped the snake! Stays at ${finalPos}.`); }
-    else { finalPos=SNAKES[pendingPos]??pendingPos; addLog(`${myName} slides down the snake 🐍 to ${finalPos}!`); }
+    if(passed){ addLog(`${myEmoji} ${myName} escaped the snake! Stays at ${finalPos}.`); }
+    else{ finalPos=SNAKES[pendingPos]??pendingPos; addLog(`${myEmoji} ${myName} slides down 🐍 to ${finalPos}!`); }
   } else if(pendingSqType==="ladder"){
-    if(passed){ finalPos=LADDERS[pendingPos]??pendingPos; addLog(`${myName} climbs the ladder 🪜 to ${finalPos}!`); }
-    else { addLog(`${myName} missed the ladder — stays at ${finalPos}.`); }
+    if(passed){ finalPos=LADDERS[pendingPos]??pendingPos; addLog(`${myEmoji} ${myName} climbs 🪜 to ${finalPos}!`); }
+    else{ addLog(`${myEmoji} ${myName} missed the ladder — stays at ${finalPos}.`); }
   }
-
   finalPos=Math.min(finalPos,21);
   await update(ref(db,`rooms/${roomId}/players/${myId}`),{position:finalPos});
-
-  if(finalPos>=21){
-    const b=document.getElementById("winnerBanner");
-    b.style.display="block";
-    b.textContent=`🎉 ${myName} reached Elsewhere and wins!`;
-  }
-
+  if(finalPos>=21) applyWinnerBanner(myName, myEmoji, myBanner.bg, myBanner.color);
   if(!pendingAgain){
     const keys=Object.keys(currentPlayers);
     let ni=(keys.indexOf(currentTurn)+1)%keys.length;
@@ -731,41 +755,6 @@ async function finishQuestion(passed){
   }
   pendingPos=null; pendingAgain=false; pendingSkip=false; pendingSqType=null; wrongAttempts=0;
 }
-
-window.joinGame=async function(){
-  const name=document.getElementById("nameInput").value.trim();
-  const room=document.getElementById("roomInput").value.trim().toLowerCase();
-  const err=document.getElementById("errMsg");
-  if(!name||!room){err.textContent="Enter name and room code!";return;}
-  err.textContent="";
-  const snap=await get(ref(db,`rooms/${room}`));
-  const data=snap.val()||{};
-  const pl=data.players||{};
-  if(Object.keys(pl).length>=4){err.textContent="Room is full! Max 4 players.";return;}
-  myName=name; roomId=room; myId=name+"_"+Date.now();
-  const color=COLORS[Object.keys(pl).length];
-  await update(ref(db,`rooms/${room}/players/${myId}`),{name,color,position:0,id:myId});
-  if(!data.currentTurn) await update(ref(db,`rooms/${room}`),{currentTurn:myId});
-  document.getElementById("joinScreen").style.display="none";
-  document.getElementById("gameScreen").style.display="block";
-  buildBoard(); buildAnswerKey(); showFace(1);
-  onValue(ref(db,`rooms/${room}`),snap=>{
-    const s=snap.val(); if(!s) return;
-    const pl=s.players||{}; const ct=s.currentTurn;
-    currentPlayers=pl; currentTurn=ct;
-    renderTokens(pl); renderPlayers(pl,ct);
-    const ami=pl[ct]?.name===myName;
-    document.getElementById("turnInfo").textContent=ami?"🎲 Your turn! Roll the dice!":"⏳ Waiting for "+(pl[ct]?.name||"...");
-    document.getElementById("die").className="die"+(ami?"":" off");
-    Object.values(pl).forEach(p=>{
-      if((p.position??0)>=21){
-        const b=document.getElementById("winnerBanner");
-        b.style.display="block";
-        b.textContent=`🎉 ${p.name} reached Elsewhere and wins! 🌟`;
-      }
-    });
-  });
-};
 
 window.rollDice=async function(){
   if(rolling) return;
@@ -785,11 +774,11 @@ window.rollDice=async function(){
     document.getElementById("rollResult").textContent="Rolled: "+roll;
     let pos=Math.min((cp.position??0)+roll,21);
     const sq=SQ.find(s=>s.n===pos);
-    addLog(`${myName} rolled ${roll} → Square ${pos}`);
+    addLog(`${myEmoji} ${myName} rolled ${roll} → Square ${pos}`);
     if(sq?.type==="good"&&sq.text.includes("2 spaces")) pos=Math.min(pos+2,21);
     if(sq?.type==="good"&&sq.text.includes("1 space"))  pos=Math.min(pos+1,21);
     const again=sq?.type==="good"&&sq.text.includes("Roll again");
-    const skip =sq?.type==="bad" &&sq.text.includes("Skip");
+    const skip =sq?.type==="bad"&&sq.text.includes("Skip");
     pendingPos=pos; pendingAgain=again; pendingSkip=skip; pendingSqType=sq?.type;
     const needsQ=["vocab","question","memory","snake","ladder"].includes(sq?.type);
     if(needsQ&&QA[pos]){
@@ -803,11 +792,7 @@ window.rollDice=async function(){
         await update(ref(db,`rooms/${roomId}`),{currentTurn:keys[ni]});
       }
       pendingPos=null; pendingSqType=null;
-      if(pos>=21){
-        const b=document.getElementById("winnerBanner");
-        b.style.display="block";
-        b.textContent=`🎉 ${myName} reached Elsewhere and wins! 🌟`;
-      }
+      if(pos>=21) applyWinnerBanner(myName, myEmoji, myBanner.bg, myBanner.color);
     }
     rolling=false;
   },650);
